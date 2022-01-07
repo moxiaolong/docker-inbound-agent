@@ -16,10 +16,14 @@ RUN curl -sSL https://get.daocloud.io/docker | sh
 RUN apt-get update &&  apt-get install -y apt-transport-https
 RUN curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg |  apt-key add -
 RUN echo "deb http://mirrors.aliyun.com/kubernetes/apt kubernetes-xenial main" |  tee -a /etc/apt/sources.list.d/kubernetes.list
-
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg |  apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" |  tee /etc/apt/sources.list.d/yarn.list
 RUN gpg --keyserver keyserver.ubuntu.com --recv-keys 307EA071
 RUN gpg --export --armor 307EA071 | apt-key add -
 RUN apt-get -y update
 RUN apt-get install -y kubectl
+RUN apt-get install -y python2.7
+RUN apt-get install -y yarn
+RUN apt-get install -y cmake build-essential
 
 ENTRYPOINT ["/usr/local/bin/jenkins-agent"]
